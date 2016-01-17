@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Google browser error, please use IE or Firefox</title>
+    <script src="../jquery/jquery-1.8.2.min.js"></script>
+    <script src="../src/jquery.ztree-deptselect.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".deptName1").ztreeDeptSelect();
+            $(".btnDept1").click(function () {
+                alert($(".deptName1").val());
+                alert($(".deptName1").ztreeDeptSelect('getCustomData'));
+            });
+
+            $(".deptName2").ztreeDeptSelect();
+            $(".deptName2").ztreeDeptSelect('setCustomData', 4, 'Human Resource Dept');
+            $(".btnDept2").click(function () {
+                alert($(".deptName2").val());
+                alert($(".deptName2").ztreeDeptSelect('getCustomData'));
+            });
+
+            $(".deptName3").ztreeDeptSelect({
+                inputWidth: '250px',
+                deptButtonEnabled: true,
+                deptButtonText: 'choose department...'
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>simple use:</h1>
+    <input type="text" class="deptName1" />
+    <input type="button" value="Get selected deptid" class="btnDept1" />
+    <br/>
+    <hr/>
+    <h1>set default dept data:</h1>
+    <input type="text" class="deptName2" />
+    <input type="button" value="Get default deptid" class="btnDept2" />
+    <br />
+    <hr />
+    <h1>set parameters:</h1>
+    <input type="text" class="deptName3" />
+</body>
+</html>

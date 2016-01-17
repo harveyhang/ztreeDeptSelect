@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>https://github.com/harveyhang</title>
+    <link href="../zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script src="../jquery/jquery-1.8.2.min.js"></script>
+    <script src="../zTree_v3/js/jquery.ztree.core-3.5.min.js"></script>
+
+    <script type="text/javascript">
+        //Modify code to apply your own business
+
+        $(document).ready(function () {
+            var zNodes;
+            //assign root data to zNodes.
+            $.ajax({
+                url: 'DeptDialogDataHandler.ashx',
+                type: 'post',
+                dataType: 'json',
+                async: false,
+                data: { 'ajaxMethod': 'GetRootData' },
+                success: function (data) {
+                    zNodes = data;
+                }
+            });
+
+            //tree setting
+            var setting = {
+                async: {
+                    enable: true, 
+                    url: "DeptDialogDataHandler.ashx",
+                    autoParam: ["id"], // Parameters of the parent node attribute that is automatically committed when the asynchronous load is loaded
+                    otherParam: ["ajaxMethod", 'AsyncCurrentNodeChildren'], //ajax request parameters
+                    type: 'post',
+                    dataType: 'json'
+                },
+                view: {
+                    showIcon: true,
+                    dblClickExpand: false
+                },
+                showLine: true, // show ztree connect line
+                data: {  //Using pId to identify the relationship between father and son 
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                callback: { //callback function.
+                    onDblClick: zTreeOnDblClick,
+                    asyncSuccess: zTreeOnAsyncSuccess
+                }
+            };
+            //init ztree.
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        });
+
+        function zTreeOnDblClick(event, treeId, treeNode) {
+            var terms = new Array();
+            terms.push(treeNode.id);
+            terms.push(treeNode.name);
+            window.returnValue = terms;
+            window.close();
+        };
+        function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {}
+    </script>
+
+</head>
+<body>
+    <div class="ztree" id="treeDemo"></div>
+</body>
+</html>
