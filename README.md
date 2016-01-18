@@ -12,4 +12,3 @@ In real application,you should modify the two files,or use other programing lang
 in order to get your business department data.
 
 Thank you！
-Harvey Hang
